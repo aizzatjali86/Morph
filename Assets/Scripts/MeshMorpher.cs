@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/* Psuedo-code:
+/* Pseudo-code:
 * Correlate old mesh to new mesh
 * - Find bounds and center of model
-* - Get all tris in relation to center, Tc of old and new model
-* - Correspond each Tc to a sphere of average radius (same for both new and old)
-* - Vc is Tc along vector from center to radius
-* - Loop through all Vc of new:
-*      - Find closest to Vc of old
-*      - Get correlation (dict) of new Tc to old Tc
+* - Get all verts in relation to center, Vc of old and new model
+* - Correspond each Vc to a sphere of average radius (same for both new and old)
+* - Spherical verts, Sc is Tc along vector from center to radius
+* - Loop through all Sc of new:
+*      - Find closest to Sc of old
+*      - Get correlation (dict) of new Vc to old Vc
 * 
 * Use Correlation to animate change between old and new
-* - Each Tc old will move to Tc new
+* - Each Vc old will move to Vc new
 */
 
 public class MeshMorpher : MonoBehaviour
