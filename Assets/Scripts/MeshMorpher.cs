@@ -34,7 +34,7 @@ public class MeshMorpher : MonoBehaviour
         int[] newTris = newMesh.triangles;
         Vector3[] newVertices = newMesh.vertices;
 
-        Vector3[] newSphericalVertices = ConvertToSphericalVertices(newVertices, newCenter, newBounds.magnitude);
+        Vector3[] newSphericalVertices = ConvertToSphericalVertices(newVertices, newCenter, oldBounds.magnitude);
 
         //Compare both SphericalVertices
     }
