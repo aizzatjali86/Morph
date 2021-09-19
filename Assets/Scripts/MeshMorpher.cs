@@ -26,10 +26,30 @@ public class MeshMorpher : MonoBehaviour
         int[] oldTris = oldMesh.triangles;
         Vector3[] oldVertices = oldMesh.vertices;
 
+        Vector3[] oldSphericalVertices = ConvertToSphericalVertices(oldVertices, oldCenter, oldBounds.magnitude);
+
         Vector3 newBounds = newMesh.bounds.extents;
         Vector3 newCenter = newMesh.bounds.center;
 
         int[] newTris = newMesh.triangles;
         Vector3[] newVertices = newMesh.vertices;
+
+        Vector3[] newSphericalVertices = ConvertToSphericalVertices(newVertices, newCenter, newBounds.magnitude);
+
+        //Compare both SphericalVertices
+    }
+
+    Vector3[] ConvertToSphericalVertices(Vector3[] vertices, Vector3 center, float radius)
+    {
+        List<Vector3> sphereVerts = new List<Vector3>();
+
+        foreach (Vector3 v in vertices)
+        {
+            Vector3 unitVec = ((v - center) / (v - center).magnitude) * radius;
+
+            sphereVerts.Add(unitVec);
+        }
+
+        return sphereVerts.ToArray();
     }
 }
