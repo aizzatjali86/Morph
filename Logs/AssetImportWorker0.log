@@ -219,3 +219,132 @@ System memory in use after: 56.9 MB.
 Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1568.
 Total: 1.679800 ms (FindLiveObjects: 0.125900 ms CreateObjectMapping: 0.033300 ms MarkObjects: 1.467300 ms  DeleteObjects: 0.052500 ms)
 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000720 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.746 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.21 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1109 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 56.8 MB.
+System memory in use after: 56.9 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1571.
+Total: 1.902000 ms (FindLiveObjects: 0.166600 ms CreateObjectMapping: 0.091800 ms MarkObjects: 1.573600 ms  DeleteObjects: 0.069000 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 28518.080904 seconds.
+  path: Assets/Scripts/MeshMorpher.cs
+  artifactKey: Guid(622a36805240b0f4f9b51667d1ec9f4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/MeshMorpher.cs using Guid(622a36805240b0f4f9b51667d1ec9f4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cfa047cfcbed1717afee3959959ddce3') in 0.008272 seconds
+  Import took 0.030820 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000597 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.60 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.776 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.20 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1109 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 56.9 MB.
+System memory in use after: 56.9 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1574.
+Total: 1.789800 ms (FindLiveObjects: 0.162900 ms CreateObjectMapping: 0.039500 ms MarkObjects: 1.475500 ms  DeleteObjects: 0.110900 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 3037.342204 seconds.
+  path: Assets/Scripts/MeshMorpher.cs
+  artifactKey: Guid(622a36805240b0f4f9b51667d1ec9f4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/MeshMorpher.cs using Guid(622a36805240b0f4f9b51667d1ec9f4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3915e82c2a30bf3ee7f58632e4ca60da') in 0.007515 seconds
+  Import took 0.023966 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000516 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.20 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.690 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.19 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1109 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 56.9 MB.
+System memory in use after: 56.9 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1577.
+Total: 1.625600 ms (FindLiveObjects: 0.130800 ms CreateObjectMapping: 0.037000 ms MarkObjects: 1.409300 ms  DeleteObjects: 0.047300 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 146.956694 seconds.
+  path: Assets/Scripts/MeshMorpher.cs
+  artifactKey: Guid(622a36805240b0f4f9b51667d1ec9f4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/MeshMorpher.cs using Guid(622a36805240b0f4f9b51667d1ec9f4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c09a556adc380f42a312e8d97a2054ff') in 0.003705 seconds
+  Import took 0.005625 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000503 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.21 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.693 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.19 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1109 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 56.9 MB.
+System memory in use after: 56.9 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1580.
+Total: 1.959700 ms (FindLiveObjects: 0.158900 ms CreateObjectMapping: 0.041300 ms MarkObjects: 1.657100 ms  DeleteObjects: 0.088800 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 276.104771 seconds.
+  path: Assets/Scripts/MeshMorpher.cs
+  artifactKey: Guid(622a36805240b0f4f9b51667d1ec9f4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/MeshMorpher.cs using Guid(622a36805240b0f4f9b51667d1ec9f4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a87fe0dbea398c6ccffa3746cba9c369') in 0.013360 seconds
+  Import took 0.018126 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
