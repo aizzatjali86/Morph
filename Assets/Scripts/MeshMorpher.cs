@@ -18,7 +18,18 @@ using UnityEngine;
 
 public class MeshMorpher : MonoBehaviour
 {
-    public Mesh newMesh;
+    void CorrelateVector(Mesh oldMesh, Mesh newMesh)
+    {
+        Vector3 oldBounds = oldMesh.bounds.extents;
+        Vector3 oldCenter = oldMesh.bounds.center;
 
+        int[] oldTris = oldMesh.triangles;
+        Vector3[] oldVertices = oldMesh.vertices;
 
+        Vector3 newBounds = newMesh.bounds.extents;
+        Vector3 newCenter = newMesh.bounds.center;
+
+        int[] newTris = newMesh.triangles;
+        Vector3[] newVertices = newMesh.vertices;
+    }
 }
