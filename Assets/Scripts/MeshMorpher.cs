@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 /* Pseudo-code:
 * Correlate old mesh to new mesh
@@ -18,7 +20,26 @@ using UnityEngine;
 
 public class MeshMorpher : MonoBehaviour
 {
-    void CorrelateVector(Mesh oldMesh, Mesh newMesh)
+    public Mesh targetMesh;
+    Dictionary<int, int> targetInds;
+
+    private void Start()
+    {
+        targetInds = CorrelateVector(GetComponent<MeshFilter>().sharedMesh, targetMesh);
+    }
+
+    private void Update()
+    {
+        Mesh instMesh = new Mesh();
+
+        instMesh.triangles = targetMesh.triangles;
+
+        instMesh.vertices = targetMesh.vertices;
+
+        //TODO Change the value of target vertices by lerping from old reference value to target value
+    }
+
+    Dictionary<int, int> CorrelateVector(Mesh oldMesh, Mesh newMesh)
     {
         Vector3 oldBounds = oldMesh.bounds.extents;
         Vector3 oldCenter = oldMesh.bounds.center;
@@ -36,7 +57,22 @@ public class MeshMorpher : MonoBehaviour
 
         Vector3[] newSphericalVertices = ConvertToSphericalVertices(newVertices, newCenter, oldBounds.magnitude);
 
+        //TODO Change to check based on index of vertices instaead of tris
         //Compare both SphericalVertices
+        Dictionary<int, int> newToOld = new Dictionary<int, int>();
+        int i = 0;
+        foreach (int newTr in newTris)
+        {
+            int oldTr = Array.IndexOf(oldSphericalVertices, oldSphericalVertices.Select(n => new { n, distance = (n - newSphericalVertices[newTr]).magnitude }).OrderBy(p => p.distance).First().n);
+            try
+            {
+                newToOld.Add(newTr, oldTr);
+            }
+            catch { }
+            i++;
+        }
+
+        return newToOld;
     }
 
     Vector3[] ConvertToSphericalVertices(Vector3[] vertices, Vector3 center, float radius)
@@ -51,5 +87,12 @@ public class MeshMorpher : MonoBehaviour
         }
 
         return sphereVerts.ToArray();
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(GetComponent<MeshFilter>().sharedMesh.bounds.center, GetComponent<MeshFilter>().sharedMesh.bounds.extents.magnitude);
     }
 }
