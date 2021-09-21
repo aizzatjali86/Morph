@@ -103,11 +103,4 @@ public class MeshMorpher : MonoBehaviour
 
         return sphereVerts.ToArray();
     }
-
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(GetComponent<MeshFilter>().sharedMesh.bounds.center, GetComponent<MeshFilter>().sharedMesh.bounds.extents.magnitude);
-    }
 }
