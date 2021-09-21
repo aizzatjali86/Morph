@@ -21,25 +21,44 @@ using System;
 public class MeshMorpher : MonoBehaviour
 {
     public Mesh targetMesh;
-    Dictionary<int, int> targetInds;
+    Vector3[] targetVertices;
+
+    Mesh instMesh;
 
     private void Start()
     {
-        targetInds = CorrelateVector(GetComponent<MeshFilter>().sharedMesh, targetMesh);
-    }
+        targetVertices = CorrelateVector(GetComponent<MeshFilter>().sharedMesh, targetMesh);
 
-    private void Update()
-    {
-        Mesh instMesh = new Mesh();
-
+        instMesh = new Mesh();
+        instMesh.vertices = targetVertices;
         instMesh.triangles = targetMesh.triangles;
 
-        instMesh.vertices = targetMesh.vertices;
-
-        //TODO Change the value of target vertices by lerping from old reference value to target value
+        GetComponent<MeshFilter>().sharedMesh = instMesh;
     }
 
-    Dictionary<int, int> CorrelateVector(Mesh oldMesh, Mesh newMesh)
+    private void FixedUpdate()
+    {
+        //TODO Change the value of target vertices by lerping from old reference value to target value
+        List<Vector3> vs = new List<Vector3>();
+        int i = 0;
+        foreach (Vector3 v in targetVertices)
+        {
+            Vector3 vLerp = Vector3.Lerp(v, targetMesh.vertices[i], 0.01f);
+            vs.Add(vLerp);
+            i++;
+        }
+
+        instMesh.vertices = vs.ToArray();
+        targetVertices = instMesh.vertices;
+
+        instMesh = new Mesh();
+        instMesh.vertices = targetVertices;
+        instMesh.triangles = targetMesh.triangles;
+
+        GetComponent<MeshFilter>().sharedMesh = instMesh;
+    }
+
+    Vector3[] CorrelateVector(Mesh oldMesh, Mesh newMesh)
     {
         Vector3 oldBounds = oldMesh.bounds.extents;
         Vector3 oldCenter = oldMesh.bounds.center;
@@ -59,20 +78,16 @@ public class MeshMorpher : MonoBehaviour
 
         //TODO Change to check based on index of vertices instaead of tris
         //Compare both SphericalVertices
-        Dictionary<int, int> newToOld = new Dictionary<int, int>();
+        List<Vector3> newToOld = new List<Vector3>();
         int i = 0;
-        foreach (int newTr in newTris)
+        foreach (Vector3 newV in newVertices)
         {
-            int oldTr = Array.IndexOf(oldSphericalVertices, oldSphericalVertices.Select(n => new { n, distance = (n - newSphericalVertices[newTr]).magnitude }).OrderBy(p => p.distance).First().n);
-            try
-            {
-                newToOld.Add(newTr, oldTr);
-            }
-            catch { }
+            Vector3 oldV = oldSphericalVertices.Select(n => new { n, distance = (n - newSphericalVertices[i]).magnitude }).OrderBy(p => p.distance).First().n;
+            newToOld.Add(oldV);
             i++;
         }
 
-        return newToOld;
+        return newToOld.ToArray();
     }
 
     Vector3[] ConvertToSphericalVertices(Vector3[] vertices, Vector3 center, float radius)
