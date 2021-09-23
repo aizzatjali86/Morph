@@ -20,14 +20,13 @@ using System;
 
 public class MeshMorpher : MonoBehaviour
 {
-    public Mesh targetMesh;
-    Vector3[] targetVertices;
-
-    Mesh instMesh;
+    public MeshFilter targetMesh;
+    Mesh instTargetMesh;
+    Mesh instOriginalMesh;
 
     private void Start()
     {
-        StartCoroutine(Morph(GetComponent<MeshFilter>().sharedMesh, targetMesh));
+        StartCoroutine(Morph(GetComponent<MeshFilter>().sharedMesh, targetMesh.sharedMesh));
     }
 
     private void FixedUpdate()
@@ -41,35 +40,66 @@ public class MeshMorpher : MonoBehaviour
         Vector3[] originalVertices = CorrelateVector(target, original);
         Vector3[] targetVertices = CorrelateVector(original, target);
 
-        instMesh = new Mesh();
-        instMesh.vertices = targetVertices;
-        instMesh.triangles = targetMesh.triangles;
+        instTargetMesh = new Mesh();
+        instTargetMesh.vertices = targetVertices;
+        instTargetMesh.triangles = target.triangles;
 
-        GetComponent<MeshFilter>().sharedMesh = instMesh;
+        GetComponent<MeshFilter>().sharedMesh = instTargetMesh;
+        //GetComponent<MeshCollider>().sharedMesh = instTargetMesh;
+
+        instOriginalMesh = new Mesh();
+        instOriginalMesh.vertices = originalVertices;
+        instOriginalMesh.triangles = original.triangles;
+
+        GameObject temp = new GameObject();
+        temp.transform.parent = transform;
+        temp.transform.localPosition = Vector3.zero;
+        temp.AddComponent<MeshRenderer>();
+        temp.GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().material;
+        temp.AddComponent<MeshFilter>();
+        temp.GetComponent<MeshFilter>().sharedMesh = instOriginalMesh;
 
         bool isMorphed = false;
 
         while (!isMorphed)
         {
-            yield return new WaitForSeconds(0.01f);
-            List<Vector3> vs = new List<Vector3>();
+            yield return new WaitForSeconds(0.1f);
+            List<Vector3> tvs = new List<Vector3>();
             int i = 0;
             foreach (Vector3 v in targetVertices)
             {
-                Vector3 vLerp = Vector3.Lerp(v, targetMesh.vertices[i], 0.01f);
-                vs.Add(vLerp);
-                isMorphed = vLerp == targetMesh.vertices[i];
+                Vector3 vLerp = Vector3.Lerp(v, target.vertices[i], 0.01f);
+                tvs.Add(vLerp);
+                isMorphed = vLerp == target.vertices[i];
                 i++;
             }
 
-            instMesh.vertices = vs.ToArray();
-            targetVertices = instMesh.vertices;
+            List<Vector3> ovs = new List<Vector3>();
+            int j = 0;
+            foreach (Vector3 v in originalVertices)
+            {
+                Vector3 vLerp = Vector3.Lerp(v, original.vertices[i], 0.01f);
+                ovs.Add(vLerp);
+                isMorphed = vLerp == original.vertices[i];
+                j++;
+            }
 
-            instMesh = new Mesh();
-            instMesh.vertices = targetVertices;
-            instMesh.triangles = targetMesh.triangles;
+            instTargetMesh.vertices = tvs.ToArray();
+            targetVertices = instTargetMesh.vertices;
 
-            GetComponent<MeshFilter>().sharedMesh = instMesh;
+            instTargetMesh = new Mesh();
+            instTargetMesh.vertices = targetVertices;
+            instTargetMesh.triangles = target.triangles;
+
+            instOriginalMesh.vertices = ovs.ToArray();
+            originalVertices = instOriginalMesh.vertices;
+
+            instOriginalMesh = new Mesh();
+            instOriginalMesh.vertices = originalVertices;
+            instOriginalMesh.triangles = original.triangles;
+
+            GetComponent<MeshFilter>().sharedMesh = instTargetMesh;
+            temp.GetComponent<MeshFilter>().sharedMesh = instOriginalMesh;
         }
     }
 
@@ -81,15 +111,14 @@ public class MeshMorpher : MonoBehaviour
         int[] oldTris = oldMesh.triangles;
         Vector3[] oldVertices = oldMesh.vertices;
 
-        Vector3[] oldSphericalVertices = ConvertToSphericalVertices(oldVertices, oldCenter, oldBounds.magnitude);
-
         Vector3 newBounds = newMesh.bounds.extents;
         Vector3 newCenter = newMesh.bounds.center;
 
         int[] newTris = newMesh.triangles;
         Vector3[] newVertices = newMesh.vertices;
 
-        Vector3[] newSphericalVertices = ConvertToSphericalVertices(newVertices, newCenter, oldBounds.magnitude);
+        Vector3[] oldSphericalVertices = ConvertToSphericalVertices(oldVertices, oldCenter, (oldBounds.magnitude + newBounds.magnitude) / 2);
+        Vector3[] newSphericalVertices = ConvertToSphericalVertices(newVertices, newCenter, (oldBounds.magnitude + newBounds.magnitude) / 2);
 
         //TODO Change to check based on index of vertices instaead of tris
         //Compare both SphericalVertices
