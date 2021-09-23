@@ -49,7 +49,6 @@ public class MeshMorpher : MonoBehaviour
 
         bool isMorphed = false;
 
-        int n = 0;
         while (!isMorphed)
         {
             yield return new WaitForSeconds(0.01f);
@@ -71,9 +70,6 @@ public class MeshMorpher : MonoBehaviour
             instMesh.triangles = targetMesh.triangles;
 
             GetComponent<MeshFilter>().sharedMesh = instMesh;
-
-            Debug.Log(n);
-            n++;
         }
     }
 
