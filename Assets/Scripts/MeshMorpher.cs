@@ -27,35 +27,54 @@ public class MeshMorpher : MonoBehaviour
 
     private void Start()
     {
-        targetVertices = CorrelateVector(GetComponent<MeshFilter>().sharedMesh, targetMesh);
-
-        instMesh = new Mesh();
-        instMesh.vertices = targetVertices;
-        instMesh.triangles = targetMesh.triangles;
-
-        GetComponent<MeshFilter>().sharedMesh = instMesh;
+        StartCoroutine(Morph(GetComponent<MeshFilter>().sharedMesh, targetMesh));
     }
 
     private void FixedUpdate()
     {
-        //TODO Change the value of target vertices by lerping from old reference value to target value
-        List<Vector3> vs = new List<Vector3>();
-        int i = 0;
-        foreach (Vector3 v in targetVertices)
-        {
-            Vector3 vLerp = Vector3.Lerp(v, targetMesh.vertices[i], 0.01f);
-            vs.Add(vLerp);
-            i++;
-        }
 
-        instMesh.vertices = vs.ToArray();
-        targetVertices = instMesh.vertices;
+    }
+
+    IEnumerator Morph(Mesh original, Mesh target)
+    {
+        //initialize correlated vertices
+        Vector3[] originalVertices = CorrelateVector(target, original);
+        Vector3[] targetVertices = CorrelateVector(original, target);
 
         instMesh = new Mesh();
         instMesh.vertices = targetVertices;
         instMesh.triangles = targetMesh.triangles;
 
         GetComponent<MeshFilter>().sharedMesh = instMesh;
+
+        bool isMorphed = false;
+
+        int n = 0;
+        while (!isMorphed)
+        {
+            yield return new WaitForSeconds(0.01f);
+            List<Vector3> vs = new List<Vector3>();
+            int i = 0;
+            foreach (Vector3 v in targetVertices)
+            {
+                Vector3 vLerp = Vector3.Lerp(v, targetMesh.vertices[i], 0.01f);
+                vs.Add(vLerp);
+                isMorphed = vLerp == targetMesh.vertices[i];
+                i++;
+            }
+
+            instMesh.vertices = vs.ToArray();
+            targetVertices = instMesh.vertices;
+
+            instMesh = new Mesh();
+            instMesh.vertices = targetVertices;
+            instMesh.triangles = targetMesh.triangles;
+
+            GetComponent<MeshFilter>().sharedMesh = instMesh;
+
+            Debug.Log(n);
+            n++;
+        }
     }
 
     Vector3[] CorrelateVector(Mesh oldMesh, Mesh newMesh)
