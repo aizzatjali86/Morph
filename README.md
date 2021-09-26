@@ -5,4 +5,5 @@ This is a Unity project to morph an object between two mesh procedurally. The id
 
 The basic method is to find the vertices of the old mesh and correspond them to the new mesh so that the whole mesh can change to and fro between the two by roughly moving from each positions.
 
-Additionally, some issue arises when the different between the number of vertices for the target mesh is too low compared to the original. One solution is to reverse the correlation of vertices so that the target will always have the larger number of vertices. Then, replace the final mesh with the target mesh at the end of the morph.
+Updated:
+Two simultaneous mesh morph is done with new and old mesh and vice versa so that the morph can be smoother. The meshes will fade in and fade out parallel to each other. At the end, the reverse morph will be destroyed.
