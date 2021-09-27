@@ -26,7 +26,7 @@ public class MeshMorpher : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Morph(GetComponent<MeshFilter>().sharedMesh, targetMesh.sharedMesh, 2));
+        StartCoroutine(Morph(GetComponent<MeshFilter>().sharedMesh, targetMesh.sharedMesh, 1, new Material(Shader.Find("Standard"))));
     }
 
     private void FixedUpdate()
@@ -34,7 +34,7 @@ public class MeshMorpher : MonoBehaviour
 
     }
 
-    IEnumerator Morph(Mesh original, Mesh target, float morphTime)
+    IEnumerator Morph(Mesh original, Mesh target, float morphTime, Material material)
     {
         //initialize correlated vertices
         Vector3[] originalVertices = CorrelateVector(target, original);
@@ -44,7 +44,7 @@ public class MeshMorpher : MonoBehaviour
         instTargetMesh.vertices = targetVertices;
         instTargetMesh.triangles = target.triangles;
 
-        Material mat = new Material(Shader.Find("Standard"));
+        Material mat = material;
         ChangeRenderMode(mat, BlendMode.Fade);
 
         GetComponent<MeshFilter>().sharedMesh = instTargetMesh;
@@ -59,7 +59,7 @@ public class MeshMorpher : MonoBehaviour
         instOriginalMesh.vertices = originalTempVertices;
         instOriginalMesh.triangles = original.triangles;
 
-        Material mat2 = new Material(Shader.Find("Standard"));
+        Material mat2 = material;
         ChangeRenderMode(mat2, BlendMode.Fade);
 
         GameObject temp = new GameObject();
@@ -73,8 +73,8 @@ public class MeshMorpher : MonoBehaviour
         temp.AddComponent<MeshFilter>();
         temp.GetComponent<MeshFilter>().sharedMesh = instOriginalMesh;
 
-        int steps = (int) (morphTime / 0.05f);
-        for (int t = 0; t <= steps; t++)
+        float steps = morphTime / 0.05f;
+        for (float t = 0; t <= steps; t++)
         {
             yield return new WaitForSeconds(0.05f);
             List<Vector3> tvs = new List<Vector3>();
@@ -106,11 +106,14 @@ public class MeshMorpher : MonoBehaviour
             instOriginalMesh.triangles = original.triangles;
 
             GetComponent<MeshFilter>().sharedMesh = instTargetMesh;
-            matColor.a = (float)t / steps;
+            if (t > steps * 0.3f) matColor.a = (float)(t - steps * 0.3f) / (steps * 0.7f);
+            //if (t > steps * 0.5f) { matColor.a = 1; }
             GetComponent<MeshRenderer>().material.color = matColor;
 
             temp.GetComponent<MeshFilter>().sharedMesh = instOriginalMesh;
-            matColor2.a = 1 - (float) t / steps;
+            if (t <= steps * 0.7f) { matColor2.a = 1 - (float)(t) / (steps * 0.7f); }
+            else { matColor2.a = 0; }
+            //if (t > steps * 0.5f) { matColor2.a = 0; }
             temp.GetComponent<MeshRenderer>().material.color = matColor2;
         }
 
